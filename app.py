@@ -39,7 +39,7 @@ def webhook():
     #print(request.data)
     data = json.loads(request.data)
     
-    if data['passphrase'] != config.WEBHOOK_PASSPHRASE:
+    if data['passphrase'] != config.TV_WEBHOOK:
         return {
             "code": "error",
             "message": "Nice try, invalid passphrase"
