@@ -12,6 +12,7 @@ api_host = 'https://api.kucoin.com'
 
 app = Flask(__name__)
 
+
 client = Client(config.API_KEY, config.API_SECRET, config.API_PASSPHRASE)
 
 @app.route('/')
