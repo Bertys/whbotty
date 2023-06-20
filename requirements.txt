@@ -1,4 +1,3 @@
 flask
 gunicorn
-kucoin
-python-kucoin
+python-kucoin==2.1.3
