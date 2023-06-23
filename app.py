@@ -70,3 +70,49 @@ def webhook():
             "code": "error",
             "message": "order failed"
         }
+
+@app.route('/webhook10', methods=['POST'])
+def webhook():
+    data = json.loads(request.data)
+    if data['passphrase'] != config.TV_WEBHOOK:
+        print("faallasteeee") 
+
+    url = "https://api.kucoin.com/api/v1/orders"
+    now = int(time.time() * 1000)
+    data = {"clientOid": "ABB", "side": "buy", "symbol": "BTC-USDT", "type": "market", "size": "0.001"}
+    data_json = json.dumps(data)
+    str_to_sign = str(now) + 'POST' + '/api/v1/orders' + data_json
+
+    signature = base64.b64encode(hmac.new(config.API_SECRET.encode(
+            'utf-8'), str_to_sign.encode('utf-8'), hashlib.sha256).digest())
+    passphrase = base64.b64encode(hmac.new(config.API_SECRET.encode(
+            'utf-8'), config.API_PASSPHRASE.encode('utf-8'), hashlib.sha256).digest())
+
+    headers = {
+            "KC-API-SIGN": signature,
+            "KC-API-TIMESTAMP": str(now),
+            "KC-API-KEY": config.API_KEY,
+            "KC-API-PASSPHRASE": passphrase,
+            "KC-API-KEY-VERSION": "2",
+            "Content-Type": "application/json"
+    }
+
+    try:
+            res = requests.post(
+                url, headers=headers, data=data_json).json()
+            print(res)
+
+    except Exception as err:
+            print(err)
+
+    if res:
+        return {
+            "code": "success",
+            "message": "order executed"
+        }
+    else:
+        print("order failed")
+        return {
+            "code": "error",
+            "message": "order failed"
+        }
