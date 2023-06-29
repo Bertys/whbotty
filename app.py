@@ -83,7 +83,7 @@ def webhook10():
     side = data['strategy']['order_action'] 
     url = "https://api.kucoin.com/api/v1/margin/order"
     now = int(time.time() * 1000)
-    data = {"clientOid": "BBB", "side": side, "symbol": "BTC-USDT", "type": "market", "size": "0.002", tradeType: "MARGIN_TRADE"}
+    data = {"clientOid": "BBB", "side": side, "symbol": "BTC-USDT", "type": "market", "size": "0.002", "tradeType": "MARGIN_TRADE"}
     data_json = json.dumps(data)
     str_to_sign = str(now) + 'POST' + '/api/v1/margin/order' + data_json
 
