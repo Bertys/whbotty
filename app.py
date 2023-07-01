@@ -35,7 +35,7 @@ def webhook():
     now = int(time.time() * 1000)
     data = {"clientOid": "BBB", "side": side, "symbol": "BTC-USDT", "type": "market", "size": "0.0021", "tradeType": "MARGIN_TRADE"}
     data_json = json.dumps(data)
-    str_to_sign = str(now) + 'POST' + '/api/v1/orders' + data_json
+    str_to_sign = str(now) + 'POST' + '/api/v1/margin/order" + data_json
 
     signature = base64.b64encode(hmac.new(config.API_SECRET.encode(
             'utf-8'), str_to_sign.encode('utf-8'), hashlib.sha256).digest())
